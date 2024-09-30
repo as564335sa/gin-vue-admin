@@ -58,7 +58,7 @@
         </div>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item>
+            <!-- <el-dropdown-item>
               <span class="font-bold">
                 当前角色：{{
                   userStore.userInfo.authority.authorityName
@@ -79,7 +79,7 @@
                   切换为：{{ item.authorityName }}
                 </span>
               </el-dropdown-item>
-            </template>
+            </template> -->
             <el-dropdown-item icon="avatar" @click="toPerson">
               个人信息
             </el-dropdown-item>
