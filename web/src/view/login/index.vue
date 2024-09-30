@@ -105,7 +105,7 @@
       ></div>
     </div>
 
-    <BottomInfo class="left-0 right-0 absolute bottom-3 mx-auto  w-full z-20">
+    <!-- <BottomInfo class="left-0 right-0 absolute bottom-3 mx-auto  w-full z-20">
       <div class="links items-center justify-center gap-2 hidden md:flex">
         <a
           href="https://www.gin-vue-admin.com/"
@@ -148,7 +148,7 @@
           >
         </a>
       </div>
-    </BottomInfo>
+    </BottomInfo> -->
   </div>
 </template>
 
