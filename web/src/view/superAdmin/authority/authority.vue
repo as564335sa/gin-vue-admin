@@ -120,7 +120,7 @@
           />
         </el-form-item>
         <el-form-item
-          label="角色姓名"
+          label="角色名称"
           prop="authorityName"
         >
           <el-input
