@@ -46,7 +46,7 @@
           <span
             class="cursor-pointer flex justify-center items-center text-black dark:text-gray-100"
           >
-            <CustomPic />
+            <!-- <CustomPic /> -->
             <span
               v-show="!isMobile"
               class="w-16"

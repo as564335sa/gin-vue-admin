@@ -8,7 +8,9 @@
               <SelectImage
                 v-model="userStore.userInfo.headerImg"
                 file-type="image"
+                v-if="false"
               />
+              <p class="text-4xl">昵称</p>
             </div>
             <div class="py-6 text-center">
               <p
@@ -44,9 +46,9 @@
                   <close />
                 </el-icon>
               </p>
-              <p class="text-gray-500 mt-2 text-md">这个家伙很懒，什么都没有留下</p>
+              <!-- <p class="text-gray-500 mt-2 text-md">这个家伙很懒，什么都没有留下</p> -->
             </div>
-            <div class="w-full h-full text-left">
+            <div class="w-full h-full text-left" v-if="false">
               <ul class="inline-block h-full w-full">
                 <li class="info-list">
                   <el-icon>
@@ -98,11 +100,11 @@
             @tab-click="handleClick"
           >
             <el-tab-pane
-              label="账号绑定"
+              label="账号操作"
               name="second"
             >
               <ul>
-                <li class="borderd">
+                <!-- <li class="borderd">
                   <p class="pb-2.5 text-xl text-gray-600">密保手机</p>
                   <p class="pb-2.5 text-lg text-gray-400">
                     已绑定手机:{{ userStore.userInfo.phone }}
@@ -133,7 +135,7 @@
                       class="float-right text-blue-400"
                     >去设置</a>
                   </p>
-                </li>
+                </li> -->
                 <li class="borderd pt-2.5">
                   <p class="pb-2.5 text-xl text-gray-600">修改密码</p>
                   <p class="pb-2.5 text-lg text-gray-400">
