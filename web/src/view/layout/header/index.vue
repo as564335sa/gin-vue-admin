@@ -12,14 +12,15 @@
         <img
           alt
           class="h-12 bg-white rounded-full"
-          :src="$GIN_VUE_ADMIN.appLogo"
+          :src="config.logo"
+          v-if="config.show_logo"
         >
         <div
           v-if="!isMobile"
           class="inline-flex font-bold text-2xl ml-2"
           :class="(config.side_mode === 'head' || config.side_mode === 'combination') &&'min-w-fit'"
         >
-          {{ $GIN_VUE_ADMIN.appName }}
+          {{ config.title }}
         </div>
       </div>
 
@@ -112,6 +113,7 @@ const router = useRouter()
 const route = useRoute()
 const appStore = useAppStore()
 const { device , config } = storeToRefs(appStore)
+
 const isMobile = computed(() =>{
   return device.value  === 'mobile'
 })
