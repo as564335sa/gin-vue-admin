@@ -174,7 +174,7 @@ const router = useRouter()
 
 const page = reactive({
   showReadme: false,
-  showForm: false
+  showForm: true
 })
 
 const showNext = () => {

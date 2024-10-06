@@ -91,6 +91,7 @@
                   type="primary"
                   size="large"
                   @click="checkInit"
+                  v-if="false"
                 >前往初始化</el-button>
 
               </el-form-item>
