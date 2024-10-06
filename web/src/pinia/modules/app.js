@@ -1,24 +1,32 @@
 
 import { defineStore } from 'pinia'
 import { ref, watchEffect, reactive } from 'vue'
-import {  setBodyPrimaryColor } from '@/utils/format'
+import { setBodyPrimaryColor } from '@/utils/format'
+import originSetting from "@/config.json"
 export const useAppStore = defineStore('app', () => {
 
   const device = ref("")
   const config = reactive({
+    title: 'IOT管理系统',
+    logo: 'logo.png',
+    show_logo: true,
     weakness: false,
     grey: false,
     primaryColor: '#3b82f6',
     showTabs: true,
     darkMode: 'auto',
-    layout_side_width : 256,
-    layout_side_collapsed_width : 80,
-    layout_side_item_height : 48,
-    show_watermark: true,
-    side_mode : 'normal'
+    layout_side_width: 256,
+    layout_side_collapsed_width: 80,
+    layout_side_item_height: 48,
+    show_watermark: false,
+    side_mode: 'normal'
+  })
+  // 初始化配置
+  Object.keys(originSetting).forEach(key => {
+    config[key] = originSetting[key]
   })
 
-  const theme = ref( 'auto')
+  const theme = ref('auto')
 
   const toggleTheme = (dark) => {
     if (dark) {
@@ -52,7 +60,7 @@ export const useAppStore = defineStore('app', () => {
     config.darkMode = e
   }
 
-  const toggleDarkModeAuto = () =>{
+  const toggleDarkModeAuto = () => {
     // 处理浏览器主题
     const darkQuery = window.matchMedia('(prefers-color-scheme: dark)')
     const dark = darkQuery.matches
@@ -67,18 +75,18 @@ export const useAppStore = defineStore('app', () => {
   }
 
   const toggleConfigSideCollapsedWidth = (e) => {
-      config.layout_side_collapsed_width = e;
+    config.layout_side_collapsed_width = e;
   }
 
   const toggleConfigSideItemHeight = (e) => {
-      config.layout_side_item_height = e;
+    config.layout_side_item_height = e;
   }
 
   const toggleConfigWatermark = (e) => {
-        config.show_watermark = e;
+    config.show_watermark = e;
   }
 
-  const toggleSideModel= (e) =>{
+  const toggleSideModel = (e) => {
     config.side_mode = e
   }
 
@@ -111,13 +119,13 @@ export const useAppStore = defineStore('app', () => {
 
 
   watchEffect(() => {
-    if(config.darkMode === 'auto'){
+    if (config.darkMode === 'auto') {
       toggleDarkModeAuto()
     }
 
-    if(config.darkMode === 'dark'){
+    if (config.darkMode === 'dark') {
       toggleTheme(true)
-    }else{
+    } else {
       toggleTheme(false)
     }
   })

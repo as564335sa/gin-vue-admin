@@ -22,10 +22,12 @@ export const useUserStore = defineStore('user', () => {
   const token = ref(window.localStorage.getItem('token') || cookie.get('x-token') || '')
   const setUserInfo = (val) => {
     userInfo.value = val
+    
     if(val.originSetting){
-      Object.keys(appStore.config).forEach(key => {
-        appStore.config[key] = val.originSetting[key]
-      })
+      // Object.keys(appStore.config).forEach(key => {
+      //   appStore.config[key] = val.originSetting[key]
+      // })
+      appStore.config['darkMode'] = val.originSetting['darkMode']
     }
   }
 
