@@ -1,13 +1,13 @@
-import { login, getUserInfo, setSelfInfo } from '@/api/user'
+import { login, getUserInfo } from '@/api/user'
 import { jsonInBlacklist } from '@/api/jwt'
 import router from '@/router/index'
 import { ElLoading, ElMessage } from 'element-plus'
 import { defineStore } from 'pinia'
-import { ref, computed, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { useRouterStore } from './router'
 import cookie from 'js-cookie'
 
-import {useAppStore} from "@/pinia";
+import { useAppStore } from '@/pinia'
 
 export const useUserStore = defineStore('user', () => {
   const appStore = useAppStore()
@@ -17,9 +17,11 @@ export const useUserStore = defineStore('user', () => {
     uuid: '',
     nickName: '',
     headerImg: '',
-    authority: {},
+    authority: {}
   })
-  const token = ref(window.localStorage.getItem('token') || cookie.get('x-token') || '')
+  const token = ref(
+    window.localStorage.getItem('token') || cookie.get('x-token') || ''
+  )
   const setUserInfo = (val) => {
     userInfo.value = val
     
@@ -38,7 +40,7 @@ export const useUserStore = defineStore('user', () => {
   const NeedInit = async () => {
     token.value = ''
     window.localStorage.removeItem('token')
-    await router.push({name: 'Init', replace: true})
+    await router.push({ name: 'Init', replace: true })
   }
 
   const ResetUserInfo = (value = {}) => {
@@ -48,7 +50,7 @@ export const useUserStore = defineStore('user', () => {
     }
   }
   /* 获取用户信息*/
-  const GetUserInfo = async() => {
+  const GetUserInfo = async () => {
     const res = await getUserInfo()
     if (res.code === 0) {
       setUserInfo(res.data.userInfo)
@@ -56,10 +58,10 @@ export const useUserStore = defineStore('user', () => {
     return res
   }
   /* 登录*/
-  const LoginIn = async(loginInfo) => {
+  const LoginIn = async (loginInfo) => {
     loadingInstance.value = ElLoading.service({
       fullscreen: true,
-      text: '登录中，请稍候...',
+      text: '登录中，请稍候...'
     })
 
     const res = await login(loginInfo)
@@ -80,7 +82,7 @@ export const useUserStore = defineStore('user', () => {
     const asyncRouters = routerStore.asyncRouters
 
     // 注册到路由表里
-    asyncRouters.forEach(asyncRouter => {
+    asyncRouters.forEach((asyncRouter) => {
       router.addRoute(asyncRouter)
     })
 
@@ -97,13 +99,12 @@ export const useUserStore = defineStore('user', () => {
       window.localStorage.setItem('osType', 'MAC')
     }
 
-
     // 全部操作均结束，关闭loading并返回
     loadingInstance.value.close()
     return true
   }
   /* 登出*/
-  const LoginOut = async() => {
+  const LoginOut = async () => {
     const res = await jsonInBlacklist()
 
     // 登出失败
@@ -118,7 +119,7 @@ export const useUserStore = defineStore('user', () => {
     window.location.reload()
   }
   /* 清理数据 */
-  const ClearStorage = async() => {
+  const ClearStorage = async () => {
     token.value = ''
     sessionStorage.clear()
     window.localStorage.removeItem('token')
@@ -126,9 +127,12 @@ export const useUserStore = defineStore('user', () => {
     localStorage.removeItem('originSetting')
   }
 
-  watch(() => token.value, () => {
-    window.localStorage.setItem('token', token.value)
-  })
+  watch(
+    () => token.value,
+    () => {
+      window.localStorage.setItem('token', token.value)
+    }
+  )
 
   return {
     userInfo,

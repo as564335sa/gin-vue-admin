@@ -1,11 +1,9 @@
-
 import { defineStore } from 'pinia'
 import { ref, watchEffect, reactive } from 'vue'
 import { setBodyPrimaryColor } from '@/utils/format'
 import originSetting from "@/config.json"
 export const useAppStore = defineStore('app', () => {
-
-  const device = ref("")
+  const device = ref('')
   const config = reactive({
     title: 'IOT管理系统',
     logo: 'logo.png',
@@ -30,30 +28,30 @@ export const useAppStore = defineStore('app', () => {
 
   const toggleTheme = (dark) => {
     if (dark) {
-      theme.value = 'dark';
+      theme.value = 'dark'
     } else {
-      theme.value = 'light';
+      theme.value = 'light'
     }
   }
 
   const toggleWeakness = (e) => {
-    config.weakness = e;
+    config.weakness = e
   }
 
   const toggleGrey = (e) => {
-    config.grey = e;
+    config.grey = e
   }
 
   const togglePrimaryColor = (e) => {
-    config.primaryColor = e;
+    config.primaryColor = e
   }
 
   const toggleTabs = (e) => {
-    config.showTabs = e;
+    config.showTabs = e
   }
 
   const toggleDevice = (e) => {
-    device.value = e;
+    device.value = e
   }
 
   const toggleDarkMode = (e) => {
@@ -71,19 +69,19 @@ export const useAppStore = defineStore('app', () => {
   }
 
   const toggleConfigSideWidth = (e) => {
-    config.layout_side_width = e;
+    config.layout_side_width = e
   }
 
   const toggleConfigSideCollapsedWidth = (e) => {
-    config.layout_side_collapsed_width = e;
+    config.layout_side_collapsed_width = e
   }
 
   const toggleConfigSideItemHeight = (e) => {
-    config.layout_side_item_height = e;
+    config.layout_side_item_height = e
   }
 
   const toggleConfigWatermark = (e) => {
-    config.show_watermark = e;
+    config.show_watermark = e
   }
 
   const toggleSideModel = (e) => {
@@ -92,31 +90,29 @@ export const useAppStore = defineStore('app', () => {
 
   watchEffect(() => {
     if (theme.value === 'dark') {
-      document.documentElement.classList.add('dark');
-      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark')
+      document.documentElement.classList.remove('light')
     } else {
-      document.documentElement.classList.add('light');
-      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light')
+      document.documentElement.classList.remove('dark')
     }
   })
   watchEffect(() => {
     // 色弱模式监听处理
     if (config.weakness) {
-      document.documentElement.classList.add('html-weakenss');
+      document.documentElement.classList.add('html-weakenss')
     } else {
-      document.documentElement.classList.remove('html-weakenss');
+      document.documentElement.classList.remove('html-weakenss')
     }
   })
   watchEffect(() => {
     // 灰色模式监听处理
     if (config.grey) {
-      document.documentElement.classList.add('html-grey');
+      document.documentElement.classList.add('html-grey')
     } else {
-      document.documentElement.classList.remove('html-grey');
+      document.documentElement.classList.remove('html-grey')
     }
   })
-
-
 
   watchEffect(() => {
     if (config.darkMode === 'auto') {
@@ -151,5 +147,4 @@ export const useAppStore = defineStore('app', () => {
     toggleConfigWatermark,
     toggleSideModel
   }
-
 })
