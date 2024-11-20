@@ -33,7 +33,7 @@
       >
         <Search />
       </el-icon>
-    </el-tooltip> -->
+    </el-tooltip>
 
     <el-tooltip class="" effect="dark" content="系统设置" placement="bottom" v-if="false">
       <el-icon
@@ -42,7 +42,7 @@
       >
         <Setting />
       </el-icon>
-    </el-tooltip> -->
+    </el-tooltip>
 
     <el-tooltip class="" effect="dark" content="刷新" placement="bottom">
       <el-icon
