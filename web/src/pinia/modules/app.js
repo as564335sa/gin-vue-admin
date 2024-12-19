@@ -4,6 +4,8 @@ import { setBodyPrimaryColor } from '@/utils/format'
 import originSetting from "@/config.json"
 export const useAppStore = defineStore('app', () => {
   const device = ref('')
+  const drawerSize = ref('')
+  const operateMinWith = ref('240')
   const config = reactive({
     title: 'IOT管理系统',
     logo: 'logo.png',
@@ -24,14 +26,17 @@ export const useAppStore = defineStore('app', () => {
     config[key] = originSetting[key]
   })
 
-  const theme = ref('auto')
+  const isDark = useDark({
+    selector: 'html',
+    attribute: 'class',
+    valueDark: 'dark',
+    valueLight: 'light',
+  })
 
-  const toggleTheme = (dark) => {
-    if (dark) {
-      theme.value = 'dark'
-    } else {
-      theme.value = 'light'
-    }
+  const preferredDark = usePreferredDark()
+
+  const toggleTheme = (darkMode) => {
+    isDark.value = darkMode
   }
 
   const toggleWeakness = (e) => {
@@ -51,6 +56,13 @@ export const useAppStore = defineStore('app', () => {
   }
 
   const toggleDevice = (e) => {
+    if(e === 'mobile'){
+      drawerSize.value = '100%'
+      operateMinWith.value = '80'
+    }else {
+      drawerSize.value = '800'
+      operateMinWith.value = '240'
+    }
     device.value = e
   }
 
@@ -58,15 +70,14 @@ export const useAppStore = defineStore('app', () => {
     config.darkMode = e
   }
 
-  const toggleDarkModeAuto = () => {
-    // 处理浏览器主题
-    const darkQuery = window.matchMedia('(prefers-color-scheme: dark)')
-    const dark = darkQuery.matches
-    toggleTheme(dark)
-    darkQuery.addEventListener('change', (e) => {
-      toggleTheme(e.matches)
-    })
-  }
+  // 监听系统主题变化
+  watchEffect(() => {
+    if (config.darkMode === 'auto') {
+      isDark.value = preferredDark.value
+      return
+    }
+    isDark.value = config.darkMode === 'dark'
+  })
 
   const toggleConfigSideWidth = (e) => {
     config.layout_side_width = e
@@ -84,55 +95,26 @@ export const useAppStore = defineStore('app', () => {
     config.show_watermark = e
   }
 
-  const toggleSideModel = (e) => {
+  const toggleSideMode = (e) => {
     config.side_mode = e
   }
 
+    // 监听色弱模式和灰色模式
   watchEffect(() => {
-    if (theme.value === 'dark') {
-      document.documentElement.classList.add('dark')
-      document.documentElement.classList.remove('light')
-    } else {
-      document.documentElement.classList.add('light')
-      document.documentElement.classList.remove('dark')
-    }
-  })
-  watchEffect(() => {
-    // 色弱模式监听处理
-    if (config.weakness) {
-      document.documentElement.classList.add('html-weakenss')
-    } else {
-      document.documentElement.classList.remove('html-weakenss')
-    }
-  })
-  watchEffect(() => {
-    // 灰色模式监听处理
-    if (config.grey) {
-      document.documentElement.classList.add('html-grey')
-    } else {
-      document.documentElement.classList.remove('html-grey')
-    }
+    document.documentElement.classList.toggle('html-weakenss', config.weakness)
+    document.documentElement.classList.toggle('html-grey', config.grey)
   })
 
+  // 监听主题色
   watchEffect(() => {
-    if (config.darkMode === 'auto') {
-      toggleDarkModeAuto()
-    }
-
-    if (config.darkMode === 'dark') {
-      toggleTheme(true)
-    } else {
-      toggleTheme(false)
-    }
-  })
-
-  watchEffect(() => {
-    setBodyPrimaryColor(config.primaryColor, theme.value)
+    setBodyPrimaryColor(config.primaryColor, isDark.value ? 'dark' : 'light')
   })
 
   return {
-    theme,
+    isDark,
     device,
+    drawerSize,
+    operateMinWith,
     config,
     toggleTheme,
     toggleDevice,
@@ -145,6 +127,6 @@ export const useAppStore = defineStore('app', () => {
     toggleConfigSideCollapsedWidth,
     toggleConfigSideItemHeight,
     toggleConfigWatermark,
-    toggleSideModel
+    toggleSideMode
   }
 })
